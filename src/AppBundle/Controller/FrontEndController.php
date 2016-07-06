@@ -13,7 +13,30 @@ class FrontEndController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
         return $this->render('FrontEnd/index.html.twig');
+    }
+    
+    /**
+     * @Route("/terms", name="terms")
+     */
+    public function termsAction(Request $request)
+    {
+        return $this->render('FrontEnd/terms.html.twig');
+    }
+    
+    /**
+     * @Route("/privacy", name="privacy")
+     */
+    public function privacyAction(Request $request)
+    {
+        return $this->render('FrontEnd/privacy.html.twig');
+    }
+    
+    /**
+     * @Route("/unsubscribe", name="unsubscribe")
+     */
+    public function unsubscribeAction(Request $request)
+    {
+        return $this->render('FrontEnd/unsubscribe.html.twig');
     }
 }
