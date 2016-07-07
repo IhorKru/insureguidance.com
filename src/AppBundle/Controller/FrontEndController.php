@@ -39,4 +39,21 @@ class FrontEndController extends Controller
     {
         return $this->render('FrontEnd/unsubscribe.html.twig');
     }
+    
+    /**
+     * @Route("/thankureg", name="thankureg")
+     */
+    public function thankuregAction(Request $request)
+    {
+        return $this->render('FrontEnd/thankureg.html.twig');
+    }
+    
+    /**
+     * @Route("/thankureg", name="thankureg")
+     */
+    public function thankuregAction(Request $request)
+    {
+        return $this->render('FrontEnd/thankureg.html.twig');
+    }
+    
 }
