@@ -47,6 +47,7 @@ class Subscriber
      *     message = "The email '{{ value }}' is not a valid email.",
      *     checkMX = true,
      *     checkHost = true
+     * )
      */
     private $emailaddress;
 
