@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Unsubscriber
@@ -24,7 +25,13 @@ class Unsubscriber
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Fill in Email field")
      * @ORM\Column(name="email_address", type="string", length=100)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true,
+     *     checkHost = true
+     * )
      */
     private $emailAddress;
 
