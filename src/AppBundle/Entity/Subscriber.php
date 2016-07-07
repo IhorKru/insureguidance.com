@@ -90,7 +90,7 @@ class Subscriber
 
     /**
      * @var bool
-     * @Assert\NotBlank (message ="You must agree to InsureGuidance.com Terms & Conditions")
+     * @Assert\NotBlank (message ="You must agree to Terms & Conditions")
      * @ORM\Column(name="agree_terms", type="boolean")
      */
     private $agreeTerms;
