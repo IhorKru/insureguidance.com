@@ -49,11 +49,11 @@ class FrontEndController extends Controller
     }
     
     /**
-     * @Route("/thankureg", name="thankureg")
+     * @Route("/sorryunsubscribe", name="sorryunsubscribe")
      */
-    public function thankuregAction(Request $request)
+    public function sorryunsubscribeAction(Request $request)
     {
-        return $this->render('FrontEnd/thankureg.html.twig');
+        return $this->render('FrontEnd/sorryunsubscribe.html.twig');
     }
     
 }
