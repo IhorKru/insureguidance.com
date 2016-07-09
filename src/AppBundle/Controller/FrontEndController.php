@@ -104,12 +104,10 @@ class FrontEndController extends Controller
         if($form2->isValid() && $form2->isSubmitted()) {
             $name = $form2['name'] ->getData();
             $emailaddress = $form2['emailaddress'] ->getData();
-            $subject = $form2['subject'] ->getData();
             $message = $form2['message'] ->getData();
 
             $newContact ->setName($name);
             $newContact ->setEmailAddress($emailaddress);
-            $newContact ->setSubject($subject);
             $newContact ->setMessage($message);
 
             //create email
