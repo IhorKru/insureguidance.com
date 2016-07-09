@@ -21,12 +21,12 @@ class UnsubscriberType extends AbstractType {
                     'attr' => array(
                         'placeholder' => 'Email Address',
                         'pattern'     => '.{2,}', //minlength
-                        'class' => ''
+                        'class' => 'form-control'
                     )])
                ->add('submit', SubmitType::class, array(
                     'label' => 'Unsubscribe', 
                     'attr' => array(
-                        'class' => ''
+                        'class' => 'btn btn-primary btn-lg'
                     )))
                 ;
     }
