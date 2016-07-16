@@ -17,14 +17,21 @@ jQuery(function($) {
 		return false;
 	});
 
-	//smooth scroll
-	$('.navbar-nav > li').click(function(event) {
-		event.preventDefault();
-		var target = $(this).find('>a').prop('hash');
-		$('html, body').animate({
-			scrollTop: $(target).offset().top
-		}, 500);
-	});
+        //SMOOTH PAGE SCROLL
+        $(function() {
+          $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+              var target = $(this.hash);
+              target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+              if (target.length) {
+                $('html,body').animate({
+                  scrollTop: target.offset().top
+                }, 1000);
+                return false;
+              }
+            }
+          });
+        });
 
 	//scrollspy
 	$('[data-spy="scroll"]').each(function () {
