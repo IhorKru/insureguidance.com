@@ -6,11 +6,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use AppBundle\Entity\Subscriber;
-use AppBundle\Entity\Unsubscriber;
+use AppBundle\Entity\SubscriberDetails;
+use AppBundle\Entity\SubscriberOptInDetails;
+use AppBundle\Entity\SubscriberOptOutDetails;
 use AppBundle\Entity\Contact;
 use AppBundle\Form\SubscriberType;
-use AppBundle\Form\UnsubscriberType;
+use AppBundle\Form\SubscriberOptOutType;
 use AppBundle\Form\ContactType;
 use DateTime;
 use Doctrine\DBAL\DBALException;
@@ -25,11 +26,15 @@ class FrontEndController extends Controller
     {
         $error1 = 0;
         try {
-            $newSubscriber = new Subscriber();
+            $newSubscriber = new SubscriberDetails;
+            $newOptInDetails = new SubscriberOptInDetails();
+                $newSubscriber ->getOptindetails() ->add($newOptInDetails);
+                
             $form1 = $this -> createForm(SubscriberType::class, $newSubscriber, [
                 'action' => $this -> generateUrl('index'),
                 'method' => 'POST'
             ]);
+            
             $form1->handleRequest($request);
             
             if($form1->isValid() && $form1->isSubmitted()) {
@@ -38,32 +43,56 @@ class FrontEndController extends Controller
                 $emailaddress = $form1['emailaddress']->getData();
                 $phone = $form1['phone']->getData();
                 $age = $form1['age']->getData();
-                $agreeterms = $form1['agreeterms']->getData();
-                $agreeemails = $form1['agreeemails']->getData();
-                $agreepartners = $form1['agreepartners']->getData();
+                foreach ($form1->get('optindetails') as $subForm) {
+                    $agreeterms = $subForm['agreeterms']->getData();
+                }
+                foreach ($form1->get('optindetails') as $subForm) {
+                    $agreeemails = $subForm['agreeemails']->getData();
+                }
+                foreach ($form1->get('optindetails') as $subForm) {
+                    $agreepartners = $subForm['agreepartners']->getData();
+                }
                 
-                $hash = $this->mc_encrypt($newSubscriber->getEmailAddress(), $this->generateKey(16));
+                $hash = $this->mc_encrypt($newSubscriber->getEmailaddress(), $this->generateKey(16));
                 
-                $em = $this->getDoctrine()->getManager();
+                //checking if user is already in database
+                $em = $this ->getDoctrine() ->getManager();
+                $entity = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
                 
-                //assigning data to variables
-                $newSubscriber ->setFirstname($firstname);
-                $newSubscriber ->setLastname($lastname);
-                $newSubscriber ->setEmailAddress($emailaddress);
-                $newSubscriber ->setPhone($phone);
-                $newSubscriber ->setAge($age);
-                $newSubscriber ->setGender(-1);
-                $newSubscriber ->setEducationLevelId(-1);
-                $newSubscriber ->setResourceId(4);
-                $newSubscriber ->setAgreeTerms($agreeterms);
-                $newSubscriber ->setAgreeEmails($agreeemails);
-                $newSubscriber ->setAgreePartners($agreepartners);
-                $newSubscriber ->setHash($hash);
-                
-                //pusshing data through to the database
-                $em->persist($newSubscriber);
-                $em->flush();
-                
+                if(!$entity) {
+                    $newSubscriber ->setFirstname($firstname);
+                    $newSubscriber ->setLastname($lastname);
+                    $newSubscriber ->setEmailaddress($emailaddress);
+                    $newSubscriber ->setPhone($phone);
+                    $newSubscriber ->setAge($age);
+                    $newSubscriber ->setGender(-1);
+                    $newSubscriber ->setEducationLevelId(-1);
+                    $newSubscriber ->setHash($hash);
+                    
+                    $newOptInDetails ->setUser($newSubscriber);
+                    $newOptInDetails ->setResourceid(4);
+                    $newOptInDetails ->setAgreeterms($agreeterms);
+                    $newOptInDetails ->setAgreeemails($agreeemails);
+                    $newOptInDetails ->setAgreepartners($agreepartners);
+                    
+                    //pusshing data through to the database
+                    $em->persist($newSubscriber);
+                    $em->persist($newOptInDetails);
+                    $em->flush();
+                    
+                } else {
+                    
+                    $newOptInDetails ->setUser($entity);
+                    $newOptInDetails ->setResourceid(4);
+                    $newOptInDetails ->setAgreeterms($agreeterms);
+                    $newOptInDetails ->setAgreeemails($agreeemails);
+                    $newOptInDetails ->setAgreepartners($agreepartners);
+
+                    //pushing to database
+                    $em->persist($newOptInDetails);
+                    $em->flush($newOptInDetails);
+                }
+                  
                 //create email
                 $urlButton = $this->generateEmailUrl(($request->getLocale() === 'ru' ? '/ru/' : '/') . 'verify/' . $newSubscriber->getEmailaddress() . '?id=' . urlencode($hash));
                 $message = Swift_Message::newInstance()
@@ -138,22 +167,28 @@ class FrontEndController extends Controller
      * @Method("GET")
      */
     public function verifyEmailAction(Request $request, $emailaddress) {
+        $newOptInDetails = new SubscriberOptInDetails();
+        $subscriber = new SubscriberDetails();
+        
         $em = $this->getDoctrine()->getManager();
-        $subscriber = $em->getRepository('AppBundle:Subscriber')->findOneByEmailaddress($emailaddress);
+        $subscriber = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
+        $userid = $subscriber ->getId();
 
         if(!$subscriber) {
             throw $this->createNotFoundException('U bettr go awai!');
         }
 
         $equals = (strcmp($subscriber->getHash(), $request->get("id", "")) === 0 && strcmp($subscriber->getEmailAddress(), $emailaddress) === 0);
-        if($equals) {
-            $subscriber->setSubscriptionDate(new DateTime());
-            $subscriber->setSubscriptionIp($_SERVER['REMOTE_ADDR']);
-            $em->persist($subscriber);
+        if(!$newOptInDetails) {
+            throw $this->createNotFoundException('U bettr go awai!');
+        } else {
+            $newOptInDetails = $em ->getRepository('AppBundle:SubscriberOptInDetails') ->findOneBy(['user' => $userid]);
+            $newOptInDetails ->setOptindate(new DateTime());
+            $newOptInDetails ->setOptinip($_SERVER['REMOTE_ADDR']);
+            $em->persist($newOptInDetails);
             $em->flush();
             return $this->redirect($this->generateUrl('index'));
         }
-        return $this->redirect($this->generateUrl('index'));
     }
     
     /**
@@ -212,9 +247,9 @@ class FrontEndController extends Controller
     */
     public function unsubscribeAction(Request $request) {   
         $error = 0;
-        $unsubscriber = new Unsubscriber();
+        $unsubscriber = new SubscriberOptOutDetails();
         
-        $form = $this->createForm(UnsubscriberType::class, $unsubscriber, array(
+        $form = $this->createForm(SubscriberOptOutType::class, $unsubscriber, array(
             'action' => $this->generateUrl('unsubscribe'),
             'method' => 'POST'
         ));

@@ -36,17 +36,16 @@ class ContactType extends AbstractType {
             ->add('message', TextType::class, ['label' => false,
                 'required' => true,
                 'error_bubbling' => true,
-                'attr' => array(
+                'attr' => [
                     'class' => 'form-control',
                     'id' => 'message',
                     'style' => 'height: 7.4em;',
                     'placeholder' => 'Message'
-                )])
+                    ]])
             ->add('submit', SubmitType::class, [
                 'label' => 'Send Message',
-                'attr' => array(
-                    'class' => 'btn btn-danger btn-lg'
-                )])
+                'attr' => ['class' => 'btn btn-danger btn-lg']
+                ])
              ;
     }
     
