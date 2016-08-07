@@ -82,7 +82,7 @@ class FrontEndController extends Controller
                     
                 } else {
                     
-                    $newOptInDetails ->setUser($newSubscriber);
+                    $newOptInDetails ->setUser($entity);
                     $newOptInDetails ->setResourceid(4);
                     $newOptInDetails ->setAgreeterms($agreeterms);
                     $newOptInDetails ->setAgreeemails($agreeemails);

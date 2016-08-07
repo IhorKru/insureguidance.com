@@ -26,7 +26,7 @@ class SubscriberOptInDetails
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="SubscriberDetails")
+     * @ORM\ManyToOne(targetEntity="SubscriberDetails", cascade={"persist"})
      */
     private $user;
 
