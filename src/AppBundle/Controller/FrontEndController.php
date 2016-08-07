@@ -53,7 +53,7 @@ class FrontEndController extends Controller
                     $agreepartners = $subForm['agreepartners']->getData();
                 }
                 
-                $hash = $this->mc_encrypt($newSubscriber->getEmailAddress(), $this->generateKey(16));
+                $hash = $this->mc_encrypt($newSubscriber->getEmailaddress(), $this->generateKey(16));
                 
                 //checking if user is already in database
                 $em = $this ->getDoctrine() ->getManager();
@@ -62,7 +62,7 @@ class FrontEndController extends Controller
                 if(!$entity) {
                     $newSubscriber ->setFirstname($firstname);
                     $newSubscriber ->setLastname($lastname);
-                    $newSubscriber ->setEmailAddress($emailaddress);
+                    $newSubscriber ->setEmailaddress($emailaddress);
                     $newSubscriber ->setPhone($phone);
                     $newSubscriber ->setAge($age);
                     $newSubscriber ->setGender(-1);
@@ -77,9 +77,11 @@ class FrontEndController extends Controller
                     
                     //pusshing data through to the database
                     $em->persist($newSubscriber);
-                    //$em->persist($newOptInDetails);
+                    $em->persist($newOptInDetails);
                     $em->flush();
+                    
                 } else {
+                    
                     $newOptInDetails ->setUser($newSubscriber);
                     $newOptInDetails ->setResourceid(4);
                     $newOptInDetails ->setAgreeterms($agreeterms);
@@ -245,9 +247,9 @@ class FrontEndController extends Controller
     */
     public function unsubscribeAction(Request $request) {   
         $error = 0;
-        $unsubscriber = new Unsubscriber();
+        $unsubscriber = new SubscriberOptOutDetails();
         
-        $form = $this->createForm(UnsubscriberType::class, $unsubscriber, array(
+        $form = $this->createForm(SubscriberOptOutType::class, $unsubscriber, array(
             'action' => $this->generateUrl('unsubscribe'),
             'method' => 'POST'
         ));

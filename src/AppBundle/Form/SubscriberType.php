@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use AppBundle\Form\SubscriberOptInType;
 
 class SubscriberType extends AbstractType {
     /**
@@ -80,7 +81,7 @@ class SubscriberType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'subscriber';
+        return 'subscriberdetails';
     }
 }
 
