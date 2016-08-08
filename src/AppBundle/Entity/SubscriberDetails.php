@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SubscriberDetails
 {
     
-    protected $optindetails;
+    private $optindetails;
             
     public function __construct()
     {
