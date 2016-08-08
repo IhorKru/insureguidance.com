@@ -226,19 +226,22 @@ class FrontEndController extends Controller
      * @Method("GET")
      */
     public function verifyUnsubscribeAction(Request $request, $emailaddress) {
+        $newOptOutDetails = new SubscriberOptOutDetails();
         $em = $this->getDoctrine()->getManager();
-        $subscriber = $em->getRepository('AppBundle:Subscriber')->findOneByEmailaddress($emailaddress);
-
+        $subscriber = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
+        
         if(!$subscriber) {
             throw $this->createNotFoundException('U bettr go awai!');
-        }
-
-        $equals = (strcmp($subscriber->getHash(), $request->get("id", "")) === 0 && strcmp($subscriber->getEmailaddress(), $emailaddress) === 0);
-        if($equals) {
-            $subscriber->setUnsubscriptionDate(new \DateTime());
-            $subscriber->setUnsubscriptionIp($_SERVER['REMOTE_ADDR']);
+        } else {
+            $newOptOutDetails ->setEmailAddress($emailaddress);
+            $newOptOutDetails ->setUser($subscriber);
+            $newOptOutDetails ->setResourceid(4);
+            $newOptOutDetails ->setOptoutdate(new DateTime());
+            $newOptOutDetails ->setOptoutip($_SERVER['REMOTE_ADDR']);
+            $em->persist($newOptOutDetails);        
             $em->flush();
         }
+
         return $this->redirect($this->generateUrl('index'));
     }
     
@@ -264,7 +267,7 @@ class FrontEndController extends Controller
         
         if($form->isValid() && $form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
-            $subscriber = $em->getRepository('AppBundle:Subscriber')->findOneByEmailaddress($unsubscriber->getEmailAddress());
+            $subscriber = $em->getRepository('AppBundle:SubscriberDetails')->findOneByEmailaddress($unsubscriber->getEmailaddress());
 
             if($subscriber) {
                     $urlButton = $this->generateEmailUrl(($request->getLocale() === 'ru' ? '/ru/' : '/') . 'verify/unsubscribe/' . $subscriber->getEmailAddress() . '?id=' . urlencode($subscriber->getHash()));
