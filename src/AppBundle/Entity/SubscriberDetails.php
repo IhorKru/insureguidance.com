@@ -338,4 +338,3 @@ class SubscriberDetails
         return $this->sourceid;
     }
 }
-
