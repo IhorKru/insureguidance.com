@@ -56,7 +56,7 @@ class FrontEndController extends Controller
                 $hash = $this->mc_encrypt($newSubscriber->getEmailaddress(), $this->generateKey(16));
                 
                 //checking if user is already in database
-                $em = $this ->getDoctrine() ->getManager('custom');
+                $em = $this ->getDoctrine() ->getManager();
                 $entity = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
                 
                 if(!$entity) {
@@ -170,7 +170,7 @@ class FrontEndController extends Controller
         $newOptInDetails = new SubscriberOptInDetails();
         $subscriber = new SubscriberDetails();
         
-        $em = $this->getDoctrine()->getManager('custom');
+        $em = $this->getDoctrine()->getManager();
         $subscriber = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
         $userid = $subscriber ->getId();
 
@@ -227,7 +227,7 @@ class FrontEndController extends Controller
      */
     public function verifyUnsubscribeAction(Request $request, $emailaddress) {
         $newOptOutDetails = new SubscriberOptOutDetails();
-        $em = $this->getDoctrine()->getManager('custom');
+        $em = $this->getDoctrine()->getManager();
         $subscriber = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
         
         if(!$subscriber) {
@@ -266,7 +266,7 @@ class FrontEndController extends Controller
             ));
         
         if($form->isValid() && $form->isSubmitted()) {
-            $em = $this->getDoctrine()->getManager('custom');
+            $em = $this->getDoctrine()->getManager();
             $subscriber = $em->getRepository('AppBundle:SubscriberDetails')->findOneByEmailaddress($unsubscriber->getEmailaddress());
 
             if($subscriber) {

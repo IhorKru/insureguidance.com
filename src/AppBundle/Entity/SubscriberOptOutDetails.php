@@ -177,7 +177,7 @@ class SubscriberOptOutDetails
      *
      * @return SubscriberOptOutDetails
      */
-    public function setUserid(\AppBundle\Entity\SubscriberDetails $id = null)
+    public function setUser(\AppBundle\Entity\SubscriberDetails $id = null)
     {
         $this->userid = $id;
 
@@ -189,7 +189,7 @@ class SubscriberOptOutDetails
      *
      * @return \AppBundle\Entity\SubscriberDetails
      */
-    public function getUserid()
+    public function getUser()
     {
         return $this->user;
     }
