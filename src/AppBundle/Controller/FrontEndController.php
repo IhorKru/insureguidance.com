@@ -229,7 +229,7 @@ class FrontEndController extends Controller
         $newOptOutDetails = new SubscriberOptOutDetails();
         $em = $this->getDoctrine()->getManager();
         $subscriber = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
-        
+        $userid = $subscriber ->getId();
         if(!$subscriber) {
             throw $this->createNotFoundException('U bettr go awai!');
         } else {

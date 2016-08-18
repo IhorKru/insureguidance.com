@@ -179,7 +179,7 @@ class SubscriberOptOutDetails
      */
     public function setUser(\AppBundle\Entity\SubscriberDetails $id = null)
     {
-        $this->userid = $id;
+        $this->user = $id;
 
         return $this;
     }
