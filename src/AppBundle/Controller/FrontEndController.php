@@ -96,8 +96,8 @@ class FrontEndController extends Controller
                 //create email
                 $urlButton = $this->generateEmailUrl(($request->getLocale() === 'ru' ? '/ru/' : '/') . 'verify/' . $newSubscriber->getEmailaddress() . '?id=' . urlencode($hash));
                 $message = Swift_Message::newInstance()
-                    ->setSubject('FinSensitive.com | Complete Registration')
-                    ->setFrom(['relaxstcom@gmail.com' => 'FinSensitive Support Team'])
+                    ->setSubject('InsureGuidance.com | Complete Registration')
+                    ->setFrom(['support@insureguidance.com' => 'InsureGuidance Support Team'])
                     ->setTo($newSubscriber->getEmailaddress())
                     ->setContentType("text/html")
                     ->setBody($this->renderView('FrontEnd/emailSubscribe.html.twig', [
@@ -142,9 +142,9 @@ class FrontEndController extends Controller
             //create email
 
             $message = Swift_Message::newInstance()
-                ->setSubject('FinSensitive.com | Question from Website |')
+                ->setSubject('InsureGuidance.com | Question from Website |')
                 ->setFrom($newContact->getEmailAddress())
-                ->setTo('kruchynenko@gmail.com')
+                ->setTo('support@insureguidance.com')
                 ->setContentType("text/html")
                 ->setBody($newContact->getMessage());
 
@@ -272,8 +272,8 @@ class FrontEndController extends Controller
             if($subscriber) {
                     $urlButton = $this->generateEmailUrl(($request->getLocale() === 'ru' ? '/ru/' : '/') . 'verify/unsubscribe/' . $subscriber->getEmailAddress() . '?id=' . urlencode($subscriber->getHash()));
                     $message = Swift_Message::newInstance()
-                        ->setSubject('FinSensitive | We are sorry you are leaving us')
-                        ->setFrom(['relaxstcom@gmail.com' => 'FinSensitive Support Team'])
+                        ->setSubject('InsureGuidance | We are sorry you are leaving us')
+                        ->setFrom(['support@insureguidance.com' => 'InsureGuidance Support Team'])
                         ->setTo($subscriber->getEmailAddress())
                         ->setContentType("text/html")
                         ->setBody($this->renderView('FrontEnd/emailUnsubscribe.html.twig',[
@@ -347,6 +347,6 @@ class FrontEndController extends Controller
     }
     
     private function generateEmailUrl($url) {
-        return "http://localhost:8888" . $this->container->get('router')->getContext()->getBaseUrl() . $url;
+        return "http://insureguidance.com/" . $this->container->get('router')->getContext()->getBaseUrl() . $url;
     }
 }
