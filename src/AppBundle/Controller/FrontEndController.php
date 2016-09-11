@@ -150,7 +150,7 @@ class FrontEndController extends Controller
         ]);
 
         $form2->handleRequest($request);
-
+        $em = $this ->getDoctrine() ->getManager();
         if($form2->isValid() && $form2->isSubmitted()) {
             $name = $form2['name'] ->getData();
             $emailaddress = $form2['emailaddress'] ->getData();
@@ -160,6 +160,7 @@ class FrontEndController extends Controller
             $newContact ->setId($query4->getSingleScalarResult() + 1);
             $newContact ->setName($name);
             $newContact ->setEmailAddress($emailaddress);
+            $newContact ->setSubject('Empty');
             $newContact ->setMessage($message);
             
             $em->persist($newContact);
