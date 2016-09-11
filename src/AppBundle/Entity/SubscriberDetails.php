@@ -333,6 +333,30 @@ class SubscriberDetails
     }
     
     /**
+     * Add optindetail
+     *
+     * @param \AppBundle\Entity\SubscriberOptInDetails $optindetail
+     *
+     * @return SubscriberDetails
+     */
+    public function addOptindetail(\AppBundle\Entity\SubscriberOptInDetails $optindetail)
+    {
+        $this->optindetails[] = $optindetail;
+
+        return $this;
+    }
+
+    /**
+     * Remove optindetail
+     *
+     * @param \AppBundle\Entity\SubscriberOptInDetails $optindetail
+     */
+    public function removeOptindetail(\AppBundle\Entity\SubscriberOptInDetails $optindetail)
+    {
+        $this->optindetails->removeElement($optindetail);
+    }
+    
+    /**
      * Set sourceid
      *
      * @param integer $sourceid
