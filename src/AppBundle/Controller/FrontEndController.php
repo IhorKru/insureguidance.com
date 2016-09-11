@@ -178,7 +178,7 @@ class FrontEndController extends Controller
             $this->get('mailer')->send($message);
             //generating successfull responce page
             return $this->redirect($this->generateUrl('index'));
-
+            
         }
          
         return $this->render('FrontEnd/index.html.twig', [
