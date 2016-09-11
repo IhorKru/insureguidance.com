@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <section id="main-slider" class="carousel" style="padding-bottom:200px">
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="container">
+                    <div class="carousel-content">
+                        <h1>Top Offers</h1>
+                        <p class="lead">Get the best insurance offers and rates in our weekly email campaigns<br>Subscribe now an never miss out a deal</p>
+                    </div>
+                </div>
+            </div><!--/.item-->
+            <div class="item">
+                <div class="container">
+                    <div class="carousel-content">
+                        <h1>Latest news</h1>
+                        <p class="lead">Be the first one to get hands on data on new insurance products, latest news and updates <br>from InsureGuidance.com</p>
+                    </div>
+                </div>
+            </div><!--/.item-->
+			<div class="item">
+                <div class="container">
+                    <div class="carousel-content">
+                        <h1>Top Data</h1>
+                        <p class="lead">Learn how to make money on of the latest finance and investment producs, learn all about insurance market to make educated dessisions</p>
+                    </div>
+                </div>
+            </div><!--/.item-->
+        </div><!--/.carousel-inner-->
+        <a class="prev" href="#main-slider" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+        <a class="next" href="#main-slider" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+    </section><!--/#main-slider-->
+	
+    <section id="about-us">
+        <div class="container">
+            <div class="box">
+                <div class="row">
+                <div class="col-lg-12 text-center" style="padding: 5px 2px;">
+                   <h2 style="font-size:25px;">Thank you for you desire to become part of SmartEduPicks.com family</h2>
+                    <p> 
+                        <h4> Hello {{ name|capitalize }} {{ lastname|capitalize }} <br> It seems you are already a member of Finsensitive.com family.  </h4>
+                    </p>
+                    <p> 
+                        <h4> If you wish to unsubscriber, please use link below and complete 2 step unsubscription process. In case of any questions, feel free to reach out 
+                           to us using contact form below or sending an email to support@finsensitive.com</h4> 
+                    </p>
+                </div>
+            </div>
+            <!-- /.row -->
+            </div><!--/.box-->
+        </div><!--/.container-->
+    </section><!--/#about-us-->
+{% endblock %}{# empty Twig template #}

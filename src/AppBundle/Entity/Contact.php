@@ -17,7 +17,7 @@ class Contact
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * 
      */
     private $id;
 
@@ -44,9 +44,23 @@ class Contact
 
 
     /**
+     * Set id
+     *
+     * @param integer id
+     *
+     * @return Contact
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
+    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {

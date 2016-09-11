@@ -27,7 +27,7 @@ class SubscriberDetails
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * 
      */
     private $id;
 
@@ -103,9 +103,23 @@ class SubscriberDetails
     private $sourceid;
     
     /**
+     * Set id
+     *
+     * @param integer id
+     *
+     * @return SubscriberDetails
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
+    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {

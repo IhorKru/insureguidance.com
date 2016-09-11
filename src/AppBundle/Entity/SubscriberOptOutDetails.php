@@ -64,6 +64,20 @@ class SubscriberOptOutDetails
     private $optoutip;
 
 
+     /**
+     * Set id
+     *
+     * @param integer id
+     *
+     * @return SubscriberOptOutDetails
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
     /**
      * Get id
      *
