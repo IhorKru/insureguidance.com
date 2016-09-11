@@ -199,7 +199,7 @@ class SubscriberOptOutDetails
     }
 
     /**
-     * Get userid
+     * Get user
      *
      * @return \AppBundle\Entity\SubscriberDetails
      */
