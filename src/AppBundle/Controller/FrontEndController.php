@@ -170,7 +170,7 @@ class FrontEndController extends Controller
             $message = Swift_Message::newInstance()
                 ->setSubject('InsureGuidance.com | Question from Website |')
                 ->setFrom($newContact->getEmailAddress())
-                ->setTo('support@insureguidance.com')
+                ->setTo('m@mediaff.com')
                 ->setContentType("text/html")
                 ->setBody($newContact->getMessage());
 

@@ -34,7 +34,14 @@ class Contact
      * @ORM\Column(name="emailaddress", type="string", length=100)
      */
     private $emailaddress;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subject", type="string", length=100)
+     */
+    private $subject;
+    
     /**
      * @var string
      *
@@ -114,7 +121,31 @@ class Contact
     {
         return $this->emailaddress;
     }
+    
+    /**
+     * Set subject
+     *
+     * @param string $subject
+     *
+     * @return Contact
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
 
+        return $this;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+    
     /**
      * Set message
      *
