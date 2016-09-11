@@ -17,8 +17,8 @@ class SubscriberDetails
 {
     
     /**
-    *@ORM\OneToMany(targetEntity="SubscriberOptInDetails", mappedBy="user", cascade={"persist"})
-    */
+     *@ORM\OneToMany(targetEntity="SubscriberOptInDetails", mappedBy="user", cascade={"persist"})
+     */
     private $optindetails;
             
     public function __construct()
@@ -46,7 +46,6 @@ class SubscriberDetails
      * @var string
      * @Assert\NotBlank (message="Complete Last Name field")
      * @ORM\Column(name="lastname", type="string", length=100)
-     * 
      */
     private $lastname;
 
