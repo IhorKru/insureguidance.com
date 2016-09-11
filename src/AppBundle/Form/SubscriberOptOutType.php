@@ -34,9 +34,7 @@ class SubscriberOptOutType extends AbstractType {
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
-         $resolver->setDefaults(array(
-               'data_class' => 'AppBundle\Entity\SubscriberOptOutDetails'
-           ));
+         $resolver->setDefaults(['data_class' => 'AppBundle\Entity\SubscriberOptOutDetails']);
     }
 
     /**

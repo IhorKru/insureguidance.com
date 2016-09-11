@@ -183,7 +183,7 @@ class FrontEndController extends Controller
         return $this->render('FrontEnd/index.html.twig', [
             'form1' => $form1 -> CreateView(),
             'form2' => $form2 -> CreateView(),
-            'errors1' => $error1
+            'errors1' => $error
         ]);
     }
     
