@@ -24,14 +24,14 @@ class FrontEndController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $error1 = 0;
+        $error = 0;
         try {
-            $newSubscriber = new SubscriberDetails;
+            $newSubscriber = new SubscriberDetails();
             $exsSubscriber = new SubscriberDetails();
             $newOptInDetails = new SubscriberOptInDetails();
                 $newSubscriber ->getOptindetails() ->add($newOptInDetails);
                 
-            $form1 = $this -> createForm(SubscriberType::class, $newSubscriber, [
+            $form1 = $this->createForm(SubscriberType::class, $newSubscriber, [
                 'action' => $this -> generateUrl('index'),
                 'method' => 'POST'
             ]);
@@ -137,9 +137,9 @@ class FrontEndController extends Controller
             }
             
         } catch (Exception $ex) {
-          $error1 = 1;
+          $error = 1;
         } catch(DBALException $e) {
-            $error = 1;
+          $error = 1;
         }
         
          //CONTACT FORM
