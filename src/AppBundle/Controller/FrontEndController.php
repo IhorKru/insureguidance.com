@@ -38,7 +38,7 @@ class FrontEndController extends Controller
             
             $form1->handleRequest($request);
             
-            if($form1->isValid() && $form1->isSubmitted()) {
+            if($form1->isSubmitted() && $form1->isValid()) {
                 $firstname = $form1['firstname']->getData();
                 $lastname = $form1['lastname']->getData();
                 $emailaddress = $form1['emailaddress']->getData();
@@ -151,7 +151,7 @@ class FrontEndController extends Controller
 
         $form2->handleRequest($request);
         $em = $this ->getDoctrine() ->getManager();
-        if($form2->isValid() && $form2->isSubmitted()) {
+        if($form2->isSubmitted() && $form2->isValid()) {
             $name = $form2['name'] ->getData();
             $emailaddress = $form2['emailaddress'] ->getData();
             $message = $form2['message'] ->getData();
@@ -201,7 +201,7 @@ class FrontEndController extends Controller
         $userid = $subscriber ->getId();
         
         if(!$subscriber) {
-            throw $this->createNotFoundException('U bettr go awai!');
+
         } else {
             $newOptInDetails = $em ->getRepository('AppBundle:SubscriberOptInDetails') ->findOneBy(['user' => $userid, 'resourceid' => 4]);
             $newOptInDetails ->setOptindate(new DateTime());
@@ -252,7 +252,7 @@ class FrontEndController extends Controller
         $subscriber = $em->getRepository('AppBundle:SubscriberDetails') ->findOneBy(['emailaddress' => $emailaddress]);
 
         if(!$subscriber) {
-            throw $this->createNotFoundException('U bettr go awai!');
+
         } else {
             $query3 = $em ->createQuery('SELECT MAX(u.id) FROM AppBundle:SubscriberOptOutdetails u');
             $newOptOutDetails ->setId($query3->getSingleScalarResult() + 1);
@@ -288,7 +288,7 @@ class FrontEndController extends Controller
             'method' => 'POST'
             ]);
         
-        if($form->isValid() && $form->isSubmitted()) {
+        if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $subscriber = $em->getRepository('AppBundle:SubscriberDetails')->findOneByEmailaddress($unsubscriber->getEmailaddress());
 
